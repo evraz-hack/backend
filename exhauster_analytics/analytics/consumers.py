@@ -1,6 +1,9 @@
 import json
 
+from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+from exhauster_analytics.analytics.models import Record
 
 
 class NotificationsConsumer(AsyncWebsocketConsumer):
@@ -10,8 +13,11 @@ class NotificationsConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         self.room_group_name = "notifications"
-
         await self.accept()
+
+        data = await self.get_last_record()
+        await self.send(text_data=json.dumps(data))
+
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
     async def disconnect(self, close_code):
@@ -20,6 +26,18 @@ class NotificationsConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         pass
+
+    @sync_to_async
+    def get_last_record(self):
+        data = {}
+        record = Record.objects.last()
+        for signal in record.signals.all():
+            if not signal.signal.config:
+                data[signal.signal.name] = signal.value
+                if signal.signal.installations:
+                    data[f"{signal.signal.name}_status"] = "normal"
+
+        return data
 
     async def info(self, event):
         message = event["data"]

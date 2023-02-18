@@ -40,7 +40,9 @@ class ExgausterRecordSignal(models.Model):
 
 class ExgausterRecordApproximationSignal(models.Model):
     record = models.ForeignKey(
-        "analytics.RecordApproximation", related_name="signals", on_delete=models.CASCADE
+        "analytics.RecordApproximation",
+        related_name="signals",
+        on_delete=models.CASCADE,
     )
     signal = models.ForeignKey(
         "analytics.ExgausterSignal",
@@ -80,6 +82,10 @@ class ExgausterSignal(models.Model):
     characteristics = models.CharField(max_length=200, blank=True)
     characteristics_description = models.CharField(max_length=200, blank=True)
     item_name = models.CharField(max_length=200, blank=True)
+
+    config = models.ForeignKey(
+        "self", null=True, related_name="installations", on_delete=models.SET_NULL
+    )
 
     @property
     def name(self) -> str:
