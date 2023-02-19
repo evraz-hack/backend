@@ -16,6 +16,10 @@ For convenience, you can keep your normal user logged in on Chrome and your supe
 ### Runserver
 
     $ ./manage.py runserver_plus
+    
+### Run consumer
+
+    $ python3 consumer.py
 
 ### Type checks
 
@@ -34,23 +38,6 @@ To run the tests, check your test coverage, and generate an HTML coverage report
 #### Running tests with pytest
 
     $ pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-``` bash
-cd exhauster_analytics
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
 
 ## Deployment
 
