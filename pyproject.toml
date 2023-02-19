@@ -6,7 +6,7 @@ authors = ["Alexandr Karpov <alexandr.d.karpov@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 psycopg2 = "^2.9.5"
 pytz = "^2022.7"
 psutil = "^5.9.4"
@@ -51,6 +51,7 @@ pandas = "^1.5.3"
 openpyxl = "^3.1.1"
 channels = {extras = ["daphne"], version = "^4.0.0"}
 channels-redis = "^4.0.0"
+catboost = "^1.1.1"
 
 
 [build-system]
